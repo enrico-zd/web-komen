@@ -13,21 +13,15 @@
 
 		<form action="{% url 'blogs:comment' blog.id %}" method="post">
 			
-			<!-- menampilkan error jika komentar kurang dari 10 -->
-			{% if errors %}
-				<p class="is-error"><strong>{{ errors }}</strong></p>
-			{% endif %}
-
-			{% csrf_token %} <!-- untuk sistem keamanan -->
-			<textarea name="komen" rows="8" cols="80"></textarea>
-			
-			<br>
-			
-			<input type="submit" name="" value="Kirim Komentar">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Kirim Komentar">
 			
 		</form>
 
 		{% for comment in blog.comment_set.all %} <!- kita menggunakan fungsi _set jadi masukan namaEntry_set.all ->
-		<p> {{ comment.desc }} </p>
+		<p> {{ comment.desc }} - 
+			<a href="{% url 'blogs:comment-edit' comment.id %}">Edit</a>
+		</p>
 		{% endfor %}
 {% endblock %}
